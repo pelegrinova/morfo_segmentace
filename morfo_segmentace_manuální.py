@@ -144,6 +144,3 @@ slova_k_segmentaci = porovnani_textu_se_slovnikem(text_na_slova_uniq_foneticky, 
 
 # spustím segmentování samotné (a rozšiřování slovníku, ale je tam chybaaa)
 segmentace_manualni(slova_k_segmentaci)
-
-
-
