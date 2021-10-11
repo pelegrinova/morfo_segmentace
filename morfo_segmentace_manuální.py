@@ -1,16 +1,17 @@
-python verze 3.7.1
-
 import csv
 import re
 
 
 # načtení textu určeného k segmentaci
-with open("název_souboru_s_textem.txt", encoding="UTF-8") as soubor:
+with open("něco.txt", encoding="UTF-8") as soubor:
     text_k_segmentaci = soubor.read().lower().replace("\n", " ").strip()
 
 # načtení morfologického slovníku
 with open("můj_slovník.csv", encoding="UTF-8") as soubor:
     obsah_slovniku = csv.reader(soubor, delimiter=";")
+    slova_ze_slovniku = set()
+    for polozka in obsah_slovniku:
+        slova_ze_slovniku.add(polozka[0])
 
 
 def uprava_textu(text):
@@ -104,22 +105,18 @@ def uprava_textu(text):
     # výsledek uložím do souboru zvlášť
     ulozeni_substituovaneho_textu(text_na_slova_foneticky)
 
-    return text_na_slova_foneticky
+    return text_na_slova_foneticky, text_na_slova_uniq_foneticky
 
 
 def ulozeni_substituovaneho_textu(text):
     # uložení "foneticky" upraveného textu
-    with open(f"foneticky_přepsaný_stud_{cislo}.txt", mode="w" ,encoding="UTF-8") as soubor:
+    with open("foneticky_přepsané_něco.txt", mode="w" ,encoding="UTF-8") as soubor:
         print(text, file=soubor)
 
 
-def porovnani_textu_se_slovnikem(text, obsah_slovniku):
-    slova_ze_slovniku = set()
-    for polozka in obsah_slovniku:
-        slova_ze_slovniku.add(polozka[0])
-
+def porovnani_textu_se_slovnikem(text_mnozina, obsah_slovniku):
     # porovnání slov k segmentaci se slovy ve slovníku (zda už některé z nich ve slovníku nejsou segmentované)
-    vysledek_porovnani = list(text_na_slova_uniq_foneticky - slova_ze_slovniku)
+    vysledek_porovnani = list(text_mnozina - slova_ze_slovniku)
     print(len(vysledek_porovnani)) # vypíše počet slov, které je třeba nasegmentovat (obvykle neradostné číslo)
 
     return vysledek_porovnani
@@ -127,21 +124,25 @@ def porovnani_textu_se_slovnikem(text, obsah_slovniku):
 
 def segmentace_manualni(slova):
     # segmentace slova + vytváření slovníku
-    with open("nový_slovník_zkušební.csv", "a", encoding="UTF-8") as csvfile: 
+    with open("můj_slovník.csv", "a", encoding="UTF-8") as csvfile: 
         vysledek_segmentace = csv.writer(csvfile, delimiter=';', lineterminator='\n')
         for polozka in slova:
             zpracovane = input(f"{polozka}: ")
             dvojice = (polozka, zpracovane)
+            print(dvojice)
             if zpracovane == "šlus bus":
                 break
             vysledek_segmentace.writerow(dvojice)
 
 
+# takhle asi neee :D ale já nevíím jak :D
+# spustím úpravu textu
+text_k_segmentaci_substituovany, text_na_slova_uniq_foneticky = uprava_textu(text_k_segmentaci)
 
-text_k_segmentaci_substituovany = uprava_textu(text_k_segmentaci)
+# spustím porovnání s mojim slovníkem
+slova_k_segmentaci = porovnani_textu_se_slovnikem(text_na_slova_uniq_foneticky, slova_ze_slovniku)
 
-slova_k_segmentaci = porovnani_textu_se_slovnikem(text_k_segmentaci_substituovany)
-
+# spustím segmentování samotné (a rozšiřování slovníku, ale je tam chybaaa)
 segmentace_manualni(slova_k_segmentaci)
 
 
