@@ -1,14 +1,19 @@
+python verze 3.7.1
+
 import csv
 import re
 
-cisla = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "slouč"] #"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "slouč"
 
-for cislo in cisla:
+# načtení textu určeného k segmentaci
+with open("název_souboru_s_textem.txt", encoding="UTF-8") as soubor:
+    text_k_segmentaci = soubor.read().lower().replace("\n", " ").strip()
 
-    # načtení textu určeného k segmentaci
-    with open(f"stud_{cislo}.txt", encoding="UTF-8") as soubor:
-        text = soubor.read().lower().replace("\n", " ").strip()
-    
+# načtení morfologického slovníku
+with open("můj_slovník.csv", encoding="UTF-8") as soubor:
+    obsah_slovniku = csv.reader(soubor, delimiter=";")
+
+
+def uprava_textu(text):
     # odstranění interpunkce a znaků - a co mazání řádků ???
     znaky = [",", ".", "!", "?", "'", "\"", "<", ">", "-", "–", ":", ";", "„", "“", "=", "%", "&", "#", "@", "/", "\\", "+", "(", ")", "[", "]", "§"]
 
@@ -18,23 +23,21 @@ for cislo in cisla:
     # odstranění číslic
     text = re.sub(r"[0-9]+", "", text)
 
-    # odstranění (max 4) mezer po odstraněných znacích # --> while dvě mezery, replace :)
+    # odstranění mezer
     text = re.sub(r"\s{2,}", " ", text)
 
-    # rozdělení textu na slova; na unikátní slova
-    text_na_slova = text.split(sep=" ") # když to nepůjde, ať si vyserou oko a upraví si to sami !!! UWAGA udělat z toho set
-    #text_na_slova_uniq = set(text_na_slova)
+    # rozdělení textu na slova
+    text_na_slova = text.split(sep=" ")
 
-
-    # "fonetický" přepis
+    # substituce grafiky tak, aby odpovídala realizaci hlásek
     text_na_slova_foneticky = []
-    for slovo in text_na_slova:
+    for slovo in text_na_slova: # pokud uniq slova, musí se tu přepsat ta proměnná text_na_slova_uniq
         slovo = slovo.replace("pouč", "po@uč")
-        #slovo = slovo.replace("nauč", "na@uč")  
-        #slovo = slovo.replace("douč", "do@uč")
-        #slovo = slovo.replace("přeuč", "pře@uč")
-        #slovo = slovo.replace("přiuč", "při@uč")
-        #slovo = slovo.replace("vyuč", "vy@uč")
+        slovo = slovo.replace("nauč", "na@uč")  
+        slovo = slovo.replace("douč", "do@uč")
+        slovo = slovo.replace("přeuč", "pře@uč")
+        slovo = slovo.replace("přiuč", "při@uč")
+        slovo = slovo.replace("vyuč", "vy@uč")
         slovo = slovo.replace("pouka", "po@uka")
         slovo = slovo.replace("pouká", "po@uká")
         slovo = slovo.replace("poukl", "po@ukl")
@@ -78,8 +81,8 @@ for cislo in cisla:
         slovo = slovo.replace("jubileu", "jubilE")
         # části
         slovo = slovo.replace("ie", "ije")
-        #slovo = slovo.replace("ii", "iji")
-        #slovo = slovo.replace("ií", "ijí")
+        slovo = slovo.replace("ii", "iji")
+        slovo = slovo.replace("ií", "ijí")
         slovo = slovo.replace("dě", "ďe")
         slovo = slovo.replace("tě", "ťe")
         slovo = slovo.replace("ně", "ňe")
@@ -94,37 +97,52 @@ for cislo in cisla:
         slovo = slovo.replace("@", "")
         text_na_slova_foneticky.append(slovo)
 
-
     text_na_slova_uniq_foneticky = set(text_na_slova_foneticky)
 
     text_na_slova_foneticky = " ".join(text_na_slova_foneticky)
 
+    # výsledek uložím do souboru zvlášť
+    ulozeni_substituovaneho_textu(text_na_slova_foneticky)
+
+    return text_na_slova_foneticky
+
+
+def ulozeni_substituovaneho_textu(text):
     # uložení "foneticky" upraveného textu
     with open(f"foneticky_přepsaný_stud_{cislo}.txt", mode="w" ,encoding="UTF-8") as soubor:
-        print(text_na_slova_foneticky, file=soubor)
+        print(text, file=soubor)
 
-    ##### tuhle část jenom pokud by někdo chtěl využít už ten můj morfo-slovník
-    # načtení morfologického slovníku
-    with open("můj_slovník.csv", encoding="UTF-8") as soubor:
-        obsah_slovniku = csv.reader(soubor, delimiter=";")
 
-        slova_ze_slovniku = set()
-        for polozka in obsah_slovniku:
-            slova_ze_slovniku.add(polozka[0])
+def porovnani_textu_se_slovnikem(text, obsah_slovniku):
+    slova_ze_slovniku = set()
+    for polozka in obsah_slovniku:
+        slova_ze_slovniku.add(polozka[0])
 
     # porovnání slov k segmentaci se slovy ve slovníku (zda už některé z nich ve slovníku nejsou segmentované)
-    slova_k_segmentaci = list(text_na_slova_uniq_foneticky - slova_ze_slovniku)
-    print(len(slova_k_segmentaci))
+    vysledek_porovnani = list(text_na_slova_uniq_foneticky - slova_ze_slovniku)
+    print(len(vysledek_porovnani)) # vypíše počet slov, které je třeba nasegmentovat (obvykle neradostné číslo)
 
-    ##### konec části s porovnáváním mojeho slovníku
+    return vysledek_porovnani
 
+
+def segmentace_manualni(slova):
     # segmentace slova + vytváření slovníku
-    with open("nový_slovník.csv", "a", encoding="UTF-8") as csvfile:  # nemám ale vyřešené, jak tohle budu přidávat do slovníku všeho
+    with open("nový_slovník_zkušební.csv", "a", encoding="UTF-8") as csvfile: 
         vysledek_segmentace = csv.writer(csvfile, delimiter=';', lineterminator='\n')
-        for polozka in slova_k_segmentaci:
+        for polozka in slova:
             zpracovane = input(f"{polozka}: ")
             dvojice = (polozka, zpracovane)
             if zpracovane == "šlus bus":
                 break
             vysledek_segmentace.writerow(dvojice)
+
+
+
+text_k_segmentaci_substituovany = uprava_textu(text_k_segmentaci)
+
+slova_k_segmentaci = porovnani_textu_se_slovnikem(text_k_segmentaci_substituovany)
+
+segmentace_manualni(slova_k_segmentaci)
+
+
 
