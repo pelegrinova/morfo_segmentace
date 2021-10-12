@@ -33,7 +33,7 @@ def uprava_textu(text):
     # substituce grafiky tak, aby odpovídala realizaci hlásek
     text_na_slova_foneticky = []
     for slovo in text_na_slova: # pokud uniq slova, musí se tu přepsat ta proměnná text_na_slova_uniq
-        slovo = slovo.replace("pouč", "po@uč")
+        slovo = slovo.replace("pouč", "po@uč")  # joojoo, tohle je prasárna a vím o tom; třeba vyřešit
         slovo = slovo.replace("nauč", "na@uč")  
         slovo = slovo.replace("douč", "do@uč")
         slovo = slovo.replace("přeuč", "pře@uč")
@@ -142,5 +142,5 @@ text_k_segmentaci_substituovany, text_na_slova_uniq_foneticky = uprava_textu(tex
 # spustím porovnání s mojim slovníkem
 slova_k_segmentaci = porovnani_textu_se_slovnikem(text_na_slova_uniq_foneticky, slova_ze_slovniku)
 
-# spustím segmentování samotné (a rozšiřování slovníku, ale je tam chybaaa)
+# spustím segmentování samotné (a rozšiřování slovníku, ale je tam chybaaa - anebo není? ověřit, jestli se to fakt zapisuje dobře do toho souboru)
 segmentace_manualni(slova_k_segmentaci)
