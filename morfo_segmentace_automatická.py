@@ -25,9 +25,9 @@ for cislo in cisla:
             slova_k_segmentaci[i] = slovnik[slova_k_segmentaci[i]]
         except KeyError:
             print(f"POZOR! SLOVO {slova_k_segmentaci[i]} CHYBÍ VE SLOVNÍKU A TUDÍŽ NEBUDE SEGMENTOVÁNO!")
-            pass   # 
+            pass   #
 
-    text_segmentovany_slouceny = " ".join(slova_k_segmentaci) 
+    text_segmentovany_slouceny = " ".join(slova_k_segmentaci)
 
     # uložení výsledku segmentace do souboru
     with open(f"vysledek_segmentace_stud_{cislo}.txt", mode="x" ,encoding="UTF-8") as soubor:

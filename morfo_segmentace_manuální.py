@@ -34,7 +34,7 @@ def uprava_textu(text):
     text_na_slova_foneticky = []
     for slovo in text_na_slova: # pokud uniq slova, musí se tu přepsat ta proměnná text_na_slova_uniq
         slovo = slovo.replace("pouč", "po@uč")  # joojoo, tohle je prasárna a vím o tom; třeba vyřešit
-        slovo = slovo.replace("nauč", "na@uč")  
+        slovo = slovo.replace("nauč", "na@uč")
         slovo = slovo.replace("douč", "do@uč")
         slovo = slovo.replace("přeuč", "pře@uč")
         slovo = slovo.replace("přiuč", "při@uč")
@@ -124,7 +124,7 @@ def porovnani_textu_se_slovnikem(text_mnozina, obsah_slovniku):
 
 def segmentace_manualni(slova):
     # segmentace slova + vytváření slovníku
-    with open("můj_slovník.csv", "a", encoding="UTF-8") as csvfile: 
+    with open("můj_slovník.csv", "a", encoding="UTF-8") as csvfile:
         vysledek_segmentace = csv.writer(csvfile, delimiter=';', lineterminator='\n')
         for polozka in slova:
             zpracovane = input(f"{polozka}: ")
