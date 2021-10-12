@@ -77,7 +77,7 @@ for cislo in cisla:
             if klic == 0:
                 pass
             else:
-                prumer = round(Decimal(str(data[klic][0] / (data[klic][1] * klic))),2)
+                prumer = round(Decimal(str(data[klic][0] / (data[klic][1] * klic))), 2)
                 mezivysledek_carka = (klic, data[klic][1], f"{prumer:n}") # to f"..." dělám proto, aby se převedly korektně desetinné tečky na desetinné čárky
                 vysledek.append(mezivysledek_carka)
         return vysledek
@@ -88,7 +88,7 @@ for cislo in cisla:
 
     # uložení výsledků do tabulky
     with open(f"data_S_M_F_types_stud_{cislo}.csv", "x", encoding="UTF-8") as csvfile: 
-        vysledek_mal = csv.writer(csvfile, delimiter=';',lineterminator='\n')
+        vysledek_mal = csv.writer(csvfile, delimiter=';', lineterminator='\n')
         vysledek_mal.writerow(["construct", "frq", "mean of constituent"])
         for i in vysledek_data:
             vysledek_mal.writerow([i[0], i[1], i[2]])

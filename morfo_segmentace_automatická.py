@@ -30,5 +30,5 @@ for cislo in cisla:
     text_segmentovany_slouceny = " ".join(slova_k_segmentaci) 
 
     # uložení výsledku segmentace do souboru
-    with open(f"vysledek_segmentace_stud_{cislo}.txt", mode="x" ,encoding="UTF-8") as soubor:
+    with open(f"vysledek_segmentace_stud_{cislo}.txt", mode="x", encoding="UTF-8") as soubor:
         print(text_segmentovany_slouceny, file=soubor)
