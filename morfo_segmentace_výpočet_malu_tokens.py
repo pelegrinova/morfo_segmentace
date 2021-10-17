@@ -18,7 +18,7 @@ for cislo in cisla:
 
     ## přípravné výpočty
     # výpočet délky konstruktu v konstituentech
-    delka_slov_v_morfech = [] 
+    delka_slov_v_morfech = []
     for slovo in segmentovany_text_tokens:
         delka_slova_v_morfech = slovo.count("-") + 1
         delka_slov_v_morfech.append(delka_slova_v_morfech)
@@ -54,7 +54,7 @@ for cislo in cisla:
     # slovník: klíč = x-konstituentový konstrukt, hodnota = (součet délek všech takových konstruktů, počet takových konstuktů)
     slovnik_data_pro_mal = {}
     for klic in soucty_delek_x_morfovych_slov:
-        slovnik_data_pro_mal[klic] = (soucty_delek_x_morfovych_slov[klic], frekvence_morfu[klic]) 
+        slovnik_data_pro_mal[klic] = (soucty_delek_x_morfovych_slov[klic], frekvence_morfu[klic])
 
     print(dict(sorted(slovnik_data_pro_mal.items()))) # seřazený slovník podle klíčů, pozor na seřazování slovníku - ošemetné, pro zobrazení či tahání infa ale stačí
 
@@ -69,12 +69,12 @@ for cislo in cisla:
                 mezivysledek_carka = (klic, data[klic][1], f"{prumer:n}") # to f"..." dělám proto, aby se převedly korektně desetinné tečky na desetinné čárky
                 vysledek.append(mezivysledek_carka)
         return vysledek
-        
+
     vysledek_mal = vypocet_mal(slovnik_data_pro_mal)
     print(vysledek_mal)
 
     # uložení výsledků do tabulky
-    with open(f"data_S_M_F_tokens_stud_{cislo}.csv", "x", encoding="UTF-8") as csvfile: 
+    with open(f"data_S_M_F_tokens_stud_{cislo}.csv", "x", encoding="UTF-8") as csvfile:
         vysledek_data = csv.writer(csvfile, delimiter=';', lineterminator='\n')
         vysledek_data.writerow(["construct", "frq", "mean of constituent"])
         for i in vysledek_mal:
