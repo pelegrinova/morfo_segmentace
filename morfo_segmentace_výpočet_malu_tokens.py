@@ -15,7 +15,6 @@ for cislo in cisla:
     with open(f"vysledek_segmentace_stud_{cislo}.txt", encoding="UTF-8") as soubor:
         segmentovany_text_tokens = soubor.read().strip().split(sep=" ")
 
-
     # přípravné výpočty
     # výpočet délky konstruktu v konstituentech
     delka_slov_v_morfech = []
