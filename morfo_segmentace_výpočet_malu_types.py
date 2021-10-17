@@ -4,15 +4,15 @@ from collections import Counter
 from locale import LC_NUMERIC
 from locale import setlocale
 
-## nastavení "lokality"
+# nastavení "lokality"
 setlocale(LC_NUMERIC, "cs_CZ.UTF-8")
 
 
-cisla = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "slouč"] #"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "slouč"
+cisla = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "slouč"]
 
 for cislo in cisla:
 
-    ## načtení segmentovaného textu
+    # načtení segmentovaného textu
     with open(f"vysledek_segmentace_stud_{cislo}.txt", encoding="UTF-8") as soubor:
         segmentovany_text = soubor.read().strip().split(sep=" ")
 
@@ -28,9 +28,9 @@ for cislo in cisla:
 
     segmentovany_text_types = token_to_types(segmentovany_text)
 
-    ## přípravné výpočty
+    # přípravné výpočty
     # výpočet délky konstruktu v konstituentech
-    delka_slov_v_morfech = [] 
+    delka_slov_v_morfech = []
     for slovo in segmentovany_text_types:
         delka_slova_v_morfech = slovo.count("-") + 1
         delka_slov_v_morfech.append(delka_slova_v_morfech)
@@ -66,29 +66,29 @@ for cislo in cisla:
     # slovník: klíč = x-konstituentový konstrukt, hodnota = (součet délek všech takových konstruktů, počet takových konstuktů)
     slovnik_data_pro_mal = {}
     for klic in soucty_delek_x_morfovych_slov:
-        slovnik_data_pro_mal[klic] = (soucty_delek_x_morfovych_slov[klic], frekvence_morfu[klic]) 
+        slovnik_data_pro_mal[klic] = (soucty_delek_x_morfovych_slov[klic], frekvence_morfu[klic])
 
-    print(dict(sorted(slovnik_data_pro_mal.items()))) # seřazený slovník podle klíčů, pozor na seřazování slovníku - ošemetné, pro zobrazení či tahání infa ale stačí
+    print(dict(sorted(slovnik_data_pro_mal.items())))  # seřazený slovník podle klíčů, pozor na seřazování slovníku - ošemetné, pro zobrazení či tahání infa ale stačí
 
-    ## funkce s výpočtem MALu
+    # funkce s výpočtem MALu
     def vypocet_mal(data):
         vysledek = []
-        for klic in sorted(data): # tahá ze seřazeného seznamu klíčů, ale nic nepřepisuje !
+        for klic in sorted(data):  # tahá ze seřazeného seznamu klíčů, ale nic nepřepisuje !
             if klic == 0:
                 pass
             else:
-                prumer = round(Decimal(str(data[klic][0] / (data[klic][1] * klic))),2)
-                mezivysledek_carka = (klic, data[klic][1], f"{prumer:n}") # to f"..." dělám proto, aby se převedly korektně desetinné tečky na desetinné čárky
+                prumer = round(Decimal(str(data[klic][0] / (data[klic][1] * klic))), 2)
+                mezivysledek_carka = (klic, data[klic][1], f"{prumer:n}")  # to f"..." dělám proto, aby se převedly korektně desetinné tečky na desetinné čárky
                 vysledek.append(mezivysledek_carka)
         return vysledek
-        
+
     vysledek_data = vypocet_mal(slovnik_data_pro_mal)
     print(vysledek_data)
     print(segmentovany_text_types)
 
     # uložení výsledků do tabulky
-    with open(f"data_S_M_F_types_stud_{cislo}.csv", "x", encoding="UTF-8") as csvfile: 
-        vysledek_mal = csv.writer(csvfile, delimiter=';',lineterminator='\n')
+    with open(f"data_S_M_F_types_stud_{cislo}.csv", "x", encoding="UTF-8") as csvfile:
+        vysledek_mal = csv.writer(csvfile, delimiter=';', lineterminator='\n')
         vysledek_mal.writerow(["construct", "frq", "mean of constituent"])
         for i in vysledek_data:
             vysledek_mal.writerow([i[0], i[1], i[2]])

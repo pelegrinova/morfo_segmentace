@@ -13,7 +13,7 @@ with open("můj_slovník.csv", encoding="UTF-8") as soubor:
 slovnik = dict(polozky_ze_slovniku)
 
 
-cisla = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "slouč"] #"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "slouč"
+cisla = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "slouč"]
 
 for cislo in cisla:
     # načtení textu/slov k segmentaci (a odstranění případné mezery na konci)
@@ -26,10 +26,10 @@ for cislo in cisla:
             slova_k_segmentaci[i] = slovnik[slova_k_segmentaci[i]]
         except KeyError:
             print(f"POZOR! SLOVO {slova_k_segmentaci[i]} CHYBÍ VE SLOVNÍKU A TUDÍŽ NEBUDE SEGMENTOVÁNO!")
-            pass   # 
+            pass   #
 
-    text_segmentovany_slouceny = " ".join(slova_k_segmentaci) 
+    text_segmentovany_slouceny = " ".join(slova_k_segmentaci)
 
     # uložení výsledku segmentace do souboru
-    with open(f"vysledek_segmentace_stud_{cislo}.txt", mode="x" ,encoding="UTF-8") as soubor:
+    with open(f"vysledek_segmentace_stud_{cislo}.txt", mode="x", encoding="UTF-8") as soubor:
         print(text_segmentovany_slouceny, file=soubor)
