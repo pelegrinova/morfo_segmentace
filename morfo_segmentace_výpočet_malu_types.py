@@ -8,7 +8,7 @@ from locale import setlocale
 setlocale(LC_NUMERIC, "cs_CZ.UTF-8")
 
 
-cisla = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "slouč"] #"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "slouč"
+cisla = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "slouč"]
 
 for cislo in cisla:
 
