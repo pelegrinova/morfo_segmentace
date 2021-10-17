@@ -110,7 +110,7 @@ def uprava_textu(text):
 
 def ulozeni_substituovaneho_textu(text):
     # uložení "foneticky" upraveného textu
-    with open("foneticky_přepsané_něco.txt", mode="w" ,encoding="UTF-8") as soubor:
+    with open("foneticky_přepsané_něco.txt", mode="w", encoding="UTF-8") as soubor:
         print(text, file=soubor)
 
 
