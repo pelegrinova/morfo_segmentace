@@ -32,9 +32,9 @@ def uprava_textu(text):
 
     # substituce grafiky tak, aby odpovídala realizaci hlásek
     text_na_slova_foneticky = []
-    for slovo in text_na_slova: # pokud uniq slova, musí se tu přepsat ta proměnná text_na_slova_uniq
+    for slovo in text_na_slova:  # pokud uniq slova, musí se tu přepsat ta proměnná text_na_slova_uniq
         slovo = slovo.replace("pouč", "po@uč")  # joojoo, tohle je prasárna a vím o tom; třeba vyřešit
-        slovo = slovo.replace("nauč", "na@uč")  
+        slovo = slovo.replace("nauč", "na@uč")
         slovo = slovo.replace("douč", "do@uč")
         slovo = slovo.replace("přeuč", "pře@uč")
         slovo = slovo.replace("přiuč", "při@uč")
@@ -110,21 +110,21 @@ def uprava_textu(text):
 
 def ulozeni_substituovaneho_textu(text):
     # uložení "foneticky" upraveného textu
-    with open("foneticky_přepsané_něco.txt", mode="w" ,encoding="UTF-8") as soubor:
+    with open("foneticky_přepsané_něco.txt", mode="w", encoding="UTF-8") as soubor:
         print(text, file=soubor)
 
 
 def porovnani_textu_se_slovnikem(text_mnozina, obsah_slovniku):
     # porovnání slov k segmentaci se slovy ve slovníku (zda už některé z nich ve slovníku nejsou segmentované)
     vysledek_porovnani = list(text_mnozina - obsah_slovniku)
-    print(len(vysledek_porovnani)) # vypíše počet slov, které je třeba nasegmentovat (obvykle neradostné číslo)
+    print(len(vysledek_porovnani))  # vypíše počet slov, které je třeba nasegmentovat (obvykle neradostné číslo)
 
     return vysledek_porovnani
 
 
 def segmentace_manualni(slova):
     # segmentace slova + vytváření slovníku
-    with open("můj_slovník.csv", "a", encoding="UTF-8") as csvfile: 
+    with open("můj_slovník.csv", "a", encoding="UTF-8") as csvfile:
         vysledek_segmentace = csv.writer(csvfile, delimiter=';', lineterminator='\n')
         for polozka in slova:
             zpracovane = input(f"{polozka}: ")
