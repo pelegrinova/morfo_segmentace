@@ -1,6 +1,6 @@
 import csv
 
-cisla = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "slouč"] #"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "slouč"
+cisla = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "slouč"]
 
 for cislo in cisla:
 
@@ -30,5 +30,5 @@ for cislo in cisla:
     text_segmentovany_slouceny = " ".join(slova_k_segmentaci)
 
     # uložení výsledku segmentace do souboru
-    with open(f"vysledek_segmentace_stud_{cislo}.txt", mode="x" ,encoding="UTF-8") as soubor:
+    with open(f"vysledek_segmentace_stud_{cislo}.txt", mode="x", encoding="UTF-8") as soubor:
         print(text_segmentovany_slouceny, file=soubor)
