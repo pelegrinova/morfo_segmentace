@@ -115,9 +115,9 @@ def ulozeni_substituovaneho_textu(text):
 
 
 def porovnani_textu_se_slovnikem(text_mnozina, obsah_slovniku):
-    # porovnání slov k segmentaci se slovy ve slovníku (zda už některé z nich ve slovníku nejsou segmentované)
+    # porovnání slov k segmentaci se slovy ve slovníku (zda už některá z nich ve slovníku nejsou segmentovaná)
     vysledek_porovnani = list(text_mnozina - obsah_slovniku)
-    print(len(vysledek_porovnani))  # vypíše počet slov, které je třeba nasegmentovat (obvykle neradostné číslo)
+    print(len(vysledek_porovnani))  # vypíše počet slov, která je třeba nasegmentovat (obvykle neradostné číslo)
 
     return vysledek_porovnani
 
