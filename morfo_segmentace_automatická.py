@@ -12,24 +12,20 @@ with open("můj_slovník.csv", encoding="UTF-8") as soubor:
 
 slovnik = dict(polozky_ze_slovniku)
 
+# načtení textu/slov k segmentaci (a odstranění případné mezery na konci)
+with open("foneticky_přepsaný_stud.txt", encoding="UTF-8") as soubor:
+    slova_k_segmentaci = soubor.read().strip().split(sep=" ")
 
-cisla = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "slouč"]
+# autosegmentace
+for i in range(len(slova_k_segmentaci)):
+    try:
+        slova_k_segmentaci[i] = slovnik[slova_k_segmentaci[i]]
+    except KeyError:
+        print(f"POZOR! SLOVO {slova_k_segmentaci[i]} CHYBÍ VE SLOVNÍKU A TUDÍŽ NEBUDE SEGMENTOVÁNO!")
+        pass   #
 
-for cislo in cisla:
-    # načtení textu/slov k segmentaci (a odstranění případné mezery na konci)
-    with open(f"foneticky_přepsaný_stud_{cislo}.txt", encoding="UTF-8") as soubor:
-        slova_k_segmentaci = soubor.read().strip().split(sep=" ")
+text_segmentovany_slouceny = " ".join(slova_k_segmentaci)
 
-    # autosegmentace
-    for i in range(len(slova_k_segmentaci)):
-        try:
-            slova_k_segmentaci[i] = slovnik[slova_k_segmentaci[i]]
-        except KeyError:
-            print(f"POZOR! SLOVO {slova_k_segmentaci[i]} CHYBÍ VE SLOVNÍKU A TUDÍŽ NEBUDE SEGMENTOVÁNO!")
-            pass   #
-
-    text_segmentovany_slouceny = " ".join(slova_k_segmentaci)
-
-    # uložení výsledku segmentace do souboru
-    with open(f"vysledek_segmentace_stud_{cislo}.txt", mode="x", encoding="UTF-8") as soubor:
-        print(text_segmentovany_slouceny, file=soubor)
+# uložení výsledku segmentace do souboru
+with open("vysledek_segmentace_stud.txt", mode="x", encoding="UTF-8") as soubor:
+    print(text_segmentovany_slouceny, file=soubor)
