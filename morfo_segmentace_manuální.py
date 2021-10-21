@@ -114,15 +114,9 @@ def ulozeni_substituovaneho_textu(text):
         print(text, file=soubor)
 
 
-def porovnani_textu_se_slovnikem(text_mnozina, obsah_slovniku):
-    # porovnání slov k segmentaci se slovy ve slovníku (zda už některá z nich ve slovníku nejsou segmentovaná)
-    vysledek_porovnani = list(text_mnozina - obsah_slovniku)
-    print(len(vysledek_porovnani))  # vypíše počet slov, která je třeba nasegmentovat (obvykle neradostné číslo)
-
-    return vysledek_porovnani
-
-
 def segmentace_manualni(slova):
+    print(len(slova))  # vypíše počet slov, které je třeba nasegmentovat (obvykle neradostné číslo)
+
     # segmentace slova + vytváření slovníku
     with open("můj_slovník.csv", "a", encoding="UTF-8") as csvfile:
         vysledek_segmentace = csv.writer(csvfile, delimiter=';', lineterminator='\n')
@@ -139,8 +133,8 @@ def segmentace_manualni(slova):
 # spustím úpravu textu
 text_k_segmentaci_substituovany, text_na_slova_uniq_foneticky = uprava_textu(text_k_segmentaci)
 
-# spustím porovnání s mojim slovníkem
-slova_k_segmentaci = porovnani_textu_se_slovnikem(text_na_slova_uniq_foneticky, slova_ze_slovniku)
+# porovnání slov k segmentaci se slovy ve slovníku (zda už některé z nich ve slovníku nejsou segmentované)
+slova_k_segmentaci = text_na_slova_uniq_foneticky - slova_ze_slovniku
 
 # spustím segmentování samotné (a rozšiřování slovníku, ale je tam chybaaa - anebo není? ověřit, jestli se to fakt zapisuje dobře do toho souboru)
 segmentace_manualni(slova_k_segmentaci)
