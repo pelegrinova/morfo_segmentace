@@ -102,9 +102,6 @@ def uprava_textu(text):
 
     text_na_slova_foneticky = " ".join(text_na_slova_foneticky)
 
-    # výsledek uložím do souboru zvlášť
-    ulozeni_substituovaneho_textu(text_na_slova_foneticky)
-
     return text_na_slova_foneticky, text_na_slova_uniq_foneticky
 
 
@@ -132,6 +129,9 @@ def segmentace_manualni(slova):
 # takhle asi neee :D ale já nevíím jak :D
 # spustím úpravu textu
 text_k_segmentaci_substituovany, text_na_slova_uniq_foneticky = uprava_textu(text_k_segmentaci)
+
+# výsledek uložím do souboru zvlášť
+ulozeni_substituovaneho_textu(text_k_segmentaci_substituovany)
 
 # porovnání slov k segmentaci se slovy ve slovníku (zda už některé z nich ve slovníku nejsou segmentované)
 slova_k_segmentaci = text_na_slova_uniq_foneticky - slova_ze_slovniku
