@@ -33,13 +33,8 @@ for cislo in cisla:
         delka_slova_ve_fonemech = len(slovo)
         delka_slov_ve_fonemech.append(delka_slova_ve_fonemech)
 
-    # počítadlo frekvencí
-    def pocitadlo(soubor):
-        frekvence = Counter(soubor)
-        return frekvence
-
     # počet x-konstituentových konstruktů
-    frekvence_morfu = pocitadlo(delka_slov_v_morfech)
+    frekvence_morfu = Counter(delka_slov_v_morfech)
 
     # slovník: klíč = x-konstituentový konstrukt, hodnota = součet délek všech takových konstruktů (dvou-morfémové slovo, součet délek všech dvou-morfémových slov)
     soucty_delek_x_morfovych_slov = {}
