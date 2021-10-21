@@ -2,18 +2,6 @@ import csv
 import re
 
 
-# načtení textu určeného k segmentaci
-with open("něco.txt", encoding="UTF-8") as soubor:
-    text_k_segmentaci = soubor.read().lower().replace("\n", " ").strip()
-
-# načtení morfologického slovníku
-with open("můj_slovník.csv", encoding="UTF-8") as soubor:
-    obsah_slovniku = csv.reader(soubor, delimiter=";")
-    slova_ze_slovniku = set()
-    for polozka in obsah_slovniku:
-        slova_ze_slovniku.add(polozka[0])
-
-
 def uprava_textu(text):
     # odstranění interpunkce a znaků - a co mazání řádků ???
     znaky = [",", ".", "!", "?", "'", "\"", "<", ">", "-", "–", ":", ";", "„", "“", "=", "%", "&", "#", "@", "/", "\\", "+", "(", ")", "[", "]", "§"]
@@ -125,6 +113,17 @@ def segmentace_manualni(slova):
                 break
             vysledek_segmentace.writerow(dvojice)
 
+
+# načtení textu určeného k segmentaci
+with open("něco.txt", encoding="UTF-8") as soubor:
+    text_k_segmentaci = soubor.read().lower().replace("\n", " ").strip()
+
+# načtení morfologického slovníku
+with open("můj_slovník.csv", encoding="UTF-8") as soubor:
+    obsah_slovniku = csv.reader(soubor, delimiter=";")
+    slova_ze_slovniku = set()
+    for polozka in obsah_slovniku:
+        slova_ze_slovniku.add(polozka[0])
 
 # takhle asi neee :D ale já nevíím jak :D
 # spustím úpravu textu
