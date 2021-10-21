@@ -42,10 +42,6 @@ setlocale(LC_NUMERIC, "cs_CZ.UTF-8")
 with open("vysledek_segmentace_stud.txt", encoding="UTF-8") as soubor:
     segmentovany_text = soubor.read().strip().split(sep=" ")
 
-# načtení segmentovaného textu
-with open("vysledek_segmentace_stud_.txt", encoding="UTF-8") as soubor:
-    segmentovany_text = soubor.read().strip().split(sep=" ")
-
 segmentovany_text_types = token_to_types(segmentovany_text)
 
 # přípravné výpočty
