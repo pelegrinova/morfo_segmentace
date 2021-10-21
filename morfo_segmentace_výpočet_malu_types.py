@@ -4,13 +4,6 @@ from collections import Counter
 from locale import LC_NUMERIC
 from locale import setlocale
 
-# nastavení "lokality"
-setlocale(LC_NUMERIC, "cs_CZ.UTF-8")
-
-# načtení segmentovaného textu
-with open("vysledek_segmentace_stud.txt", encoding="UTF-8") as soubor:
-    segmentovany_text = soubor.read().strip().split(sep=" ")
-
 
 # převod textu v tokens na text v types
 def token_to_types(text):
@@ -22,6 +15,36 @@ def token_to_types(text):
 
     return text_types
 
+
+# počítadlo frekvencí
+def pocitadlo(soubor):
+    frekvence = Counter(soubor)
+    return frekvence
+
+
+# funkce s výpočtem MALu
+def vypocet_mal(data):
+    vysledek = []
+    for klic in sorted(data):  # tahá ze seřazeného seznamu klíčů, ale nic nepřepisuje !
+        if klic == 0:
+            pass
+        else:
+            prumer = round(Decimal(str(data[klic][0] / (data[klic][1] * klic))), 2)
+            mezivysledek_carka = (klic, data[klic][1], f"{prumer:n}")  # to f"..." dělám proto, aby se převedly korektně desetinné tečky na desetinné čárky
+            vysledek.append(mezivysledek_carka)
+    return vysledek
+
+
+# nastavení "lokality"
+setlocale(LC_NUMERIC, "cs_CZ.UTF-8")
+
+# načtení segmentovaného textu
+with open("vysledek_segmentace_stud.txt", encoding="UTF-8") as soubor:
+    segmentovany_text = soubor.read().strip().split(sep=" ")
+
+# načtení segmentovaného textu
+with open("vysledek_segmentace_stud_.txt", encoding="UTF-8") as soubor:
+    segmentovany_text = soubor.read().strip().split(sep=" ")
 
 segmentovany_text_types = token_to_types(segmentovany_text)
 
@@ -43,15 +66,8 @@ for slovo in nesegmentovany_text:
     delka_slova_ve_fonemech = len(slovo)
     delka_slov_ve_fonemech.append(delka_slova_ve_fonemech)
 
-
-# počítadlo frekvencí
-def pocitadlo(soubor):
-    frekvence = Counter(soubor)
-    return frekvence
-
-
 # počet x-konstituentových konstruktů
-frekvence_morfu = pocitadlo(delka_slov_v_morfech)
+frekvence_morfu = Counter(delka_slov_v_morfech)
 
 # slovník: klíč = x-konstituentový konstrukt, hodnota = součet délek všech takových konstruktů (dvou-morfémové slovo, součet délek všech dvou-morfémových slov)
 soucty_delek_x_morfovych_slov = {}
@@ -69,26 +85,12 @@ for klic in soucty_delek_x_morfovych_slov:
 
 print(dict(sorted(slovnik_data_pro_mal.items())))  # seřazený slovník podle klíčů, pozor na seřazování slovníku - ošemetné, pro zobrazení či tahání infa ale stačí
 
-
-# funkce s výpočtem MALu
-def vypocet_mal(data):
-    vysledek = []
-    for klic in sorted(data):  # tahá ze seřazeného seznamu klíčů, ale nic nepřepisuje !
-        if klic == 0:
-            pass
-        else:
-            prumer = round(Decimal(str(data[klic][0] / (data[klic][1] * klic))), 2)
-            mezivysledek_carka = (klic, data[klic][1], f"{prumer:n}")  # to f"..." dělám proto, aby se převedly korektně desetinné tečky na desetinné čárky
-            vysledek.append(mezivysledek_carka)
-    return vysledek
-
-
 vysledek_data = vypocet_mal(slovnik_data_pro_mal)
 print(vysledek_data)
 print(segmentovany_text_types)
 
 # uložení výsledků do tabulky
-with open("data_S_M_F_types_stud.csv", "x", encoding="UTF-8") as csvfile:
+with open("data_S_M_F_types_stud_.csv", "x", encoding="UTF-8") as csvfile:
     vysledek_mal = csv.writer(csvfile, delimiter=';', lineterminator='\n')
     vysledek_mal.writerow(["construct", "frq", "mean of constituent"])
     for i in vysledek_data:
