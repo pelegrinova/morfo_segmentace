@@ -1,97 +1,7 @@
 import csv
-import re
 
 DICTIONARY_FILE = "můj_slovník.csv"
-INPUT_FILE = "něco.txt"
-OUTPUT_FILE = "foneticky_přepsané_něco.txt"
-
-
-def uprava_textu(text):
-    # odstranění interpunkce a znaků - a co mazání řádků ???
-    znaky = [",", ".", "!", "?", "'", "\"", "<", ">", "-", "–", ":", ";", "„", "“", "=", "%", "&", "#", "@", "/", "\\", "+", "(", ")", "[", "]", "§"]
-
-    for znak in znaky:
-        text = text.replace(znak, "")
-
-    # odstranění číslic
-    text = re.sub(r"[0-9]+", "", text)
-
-    # rozdělení textu na slova
-    text_na_slova = text.split()
-
-    # substituce grafiky tak, aby odpovídala realizaci hlásek
-    text_na_slova_foneticky = []
-    for slovo in text_na_slova:  # pokud uniq slova, musí se tu přepsat ta proměnná text_na_slova_uniq
-        slovo = slovo.replace("pouč", "po@uč")  # joojoo, tohle je prasárna a vím o tom; třeba vyřešit
-        slovo = slovo.replace("nauč", "na@uč")
-        slovo = slovo.replace("douč", "do@uč")
-        slovo = slovo.replace("přeuč", "pře@uč")
-        slovo = slovo.replace("přiuč", "při@uč")
-        slovo = slovo.replace("vyuč", "vy@uč")
-        slovo = slovo.replace("pouka", "po@uka")
-        slovo = slovo.replace("pouká", "po@uká")
-        slovo = slovo.replace("poukl", "po@ukl")
-        slovo = slovo.replace("poulič", "po@ulič")
-        slovo = slovo.replace("poum", "po@um")
-        slovo = slovo.replace("poupr", "po@upr")
-        slovo = slovo.replace("pouráž", "po@uráž")
-        slovo = slovo.replace("pousm", "po@usm")
-        slovo = slovo.replace("poust", "po@ust")
-        slovo = slovo.replace("poute", "po@ute")
-        slovo = slovo.replace("pouvaž", "po@uvaž")
-        slovo = slovo.replace("pouzen", "po@uzen")
-        slovo = slovo.replace("douč", "do@uč")
-        slovo = slovo.replace("douprav", "do@uprav")
-        slovo = slovo.replace("doužív", "do@užív")
-        slovo = slovo.replace("douzov", "do@uzov")
-        slovo = slovo.replace("doupřesn", "do@upřesn")
-        slovo = slovo.replace("doudit", "do@udit")
-        slovo = slovo.replace("doudí", "do@udí")
-        slovo = slovo.replace("eufemism", "Efemism")
-        slovo = slovo.replace("eufor", "Efor")
-        slovo = slovo.replace("euro", "Ero")
-        slovo = slovo.replace("eutan", "Etan")
-        slovo = slovo.replace("farmaceut", "farmacEt")
-        slovo = slovo.replace("feud", "fEd")
-        slovo = slovo.replace("koloseu", "KolosE")
-        slovo = slovo.replace("koreu", "korE")
-        slovo = slovo.replace("leuk", "lEk")
-        slovo = slovo.replace("linoleu", "linolE")
-        slovo = slovo.replace("mauzoleu", "mauzolE")
-        slovo = slovo.replace("muzeu", "muzE")
-        slovo = slovo.replace("neutral", "nEtral")
-        slovo = slovo.replace("neutrál", "nEtrál")
-        slovo = slovo.replace("pneum", "pnEm")
-        slovo = slovo.replace("pseudo", "psEdo")
-        slovo = slovo.replace("terapeut", "terapEt")
-        slovo = slovo.replace("eufon", "Efon")
-        slovo = slovo.replace("eunuch", "Enuch")
-        slovo = slovo.replace("eunuš", "Enuš")
-        slovo = slovo.replace("zeugm", "zEgm")
-        slovo = slovo.replace("jubileu", "jubilE")
-        # části
-        slovo = slovo.replace("ie", "ije")
-        slovo = slovo.replace("ii", "iji")
-        slovo = slovo.replace("ií", "ijí")
-        slovo = slovo.replace("dě", "ďe")
-        slovo = slovo.replace("tě", "ťe")
-        slovo = slovo.replace("ně", "ňe")
-        slovo = slovo.replace("mě", "MŇE")
-        slovo = slovo.replace("ě", "JE")
-        slovo = slovo.replace("x", "KS")
-        slovo = slovo.replace("ch", "X")
-        slovo = slovo.replace("q", "KW")
-        slovo = slovo.replace("ou", "O")
-        slovo = slovo.replace("au", "A")
-        # odstranění "@"
-        slovo = slovo.replace("@", "")
-        text_na_slova_foneticky.append(slovo)
-
-    text_na_slova_uniq_foneticky = set(text_na_slova_foneticky)
-
-    text_na_slova_foneticky = " ".join(text_na_slova_foneticky)
-
-    return text_na_slova_foneticky, text_na_slova_uniq_foneticky
+INPUT_FILE = "foneticky_přepsané_něco.txt"
 
 
 def segmentace_manualni(slova):
@@ -111,7 +21,7 @@ def segmentace_manualni(slova):
 
 # načtení textu určeného k segmentaci
 with open(INPUT_FILE, encoding="UTF-8") as soubor:
-    text_k_segmentaci = soubor.read().lower()
+    text_k_segmentaci_substituovany = soubor.read().rstrip().split(sep=" ")
 
 # načtení morfologického slovníku
 with open(DICTIONARY_FILE, encoding="UTF-8") as soubor:
@@ -122,11 +32,7 @@ with open(DICTIONARY_FILE, encoding="UTF-8") as soubor:
 
 # takhle asi neee :D ale já nevíím jak :D
 # spustím úpravu textu
-text_k_segmentaci_substituovany, text_na_slova_uniq_foneticky = uprava_textu(text_k_segmentaci)
-
-# "foneticky" upravený text uložím do souboru zvlášť
-with open(OUTPUT_FILE, mode="x", encoding="UTF-8") as soubor:
-    print(text_k_segmentaci_substituovany, file=soubor)
+text_na_slova_uniq_foneticky = set(text_k_segmentaci_substituovany)
 
 # porovnání slov k segmentaci se slovy ve slovníku (zda už některé z nich ve slovníku nejsou segmentované)
 slova_k_segmentaci = text_na_slova_uniq_foneticky - slova_ze_slovniku
