@@ -97,12 +97,6 @@ def uprava_textu(text):
     return text_na_slova_foneticky, text_na_slova_uniq_foneticky
 
 
-def ulozeni_substituovaneho_textu(text):
-    # uložení "foneticky" upraveného textu
-    with open(OUTPUT_FILE, mode="x", encoding="UTF-8") as soubor:
-        print(text, file=soubor)
-
-
 def segmentace_manualni(slova):
     print(len(slova))  # vypíše počet slov, které je třeba nasegmentovat (obvykle neradostné číslo)
 
@@ -133,8 +127,9 @@ with open(DICTIONARY_FILE, encoding="UTF-8") as soubor:
 # spustím úpravu textu
 text_k_segmentaci_substituovany, text_na_slova_uniq_foneticky = uprava_textu(text_k_segmentaci)
 
-# výsledek uložím do souboru zvlášť
-ulozeni_substituovaneho_textu(text_k_segmentaci_substituovany)
+# "foneticky" upravený text uložím do souboru zvlášť
+with open("foneticky_přepsané_něco.txt", mode="x", encoding="UTF-8") as soubor:
+    print(text_k_segmentaci_substituovany, file=soubor)
 
 # porovnání slov k segmentaci se slovy ve slovníku (zda už některé z nich ve slovníku nejsou segmentované)
 slova_k_segmentaci = text_na_slova_uniq_foneticky - slova_ze_slovniku
