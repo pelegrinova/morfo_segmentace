@@ -28,7 +28,7 @@ def vypocet_mal(data):
 setlocale(LC_NUMERIC, "cs_CZ.UTF-8")
 
 # načtení segmentovaného textu
-with open("vysledek_segmentace_stud_.txt", encoding="UTF-8") as soubor:
+with open("vysledek_segmentace_stud.txt", encoding="UTF-8") as soubor:
     segmentovany_text_tokens = soubor.read().strip().split(sep=" ")
 
 # přípravné výpočty
@@ -72,9 +72,8 @@ vysledek_mal = vypocet_mal(slovnik_data_pro_mal)
 print(vysledek_mal)
 
 # uložení výsledků do tabulky
-with open("data_S_M_F_tokens_stud_.csv", "x", encoding="UTF-8") as csvfile:
+with open("data_S_M_F_tokens_stud.csv", "x", encoding="UTF-8") as csvfile:
     vysledek_data = csv.writer(csvfile, delimiter=';', lineterminator='\n')
     vysledek_data.writerow(["construct", "frq", "mean of constituent"])
     for i in vysledek_mal:
         vysledek_data.writerow([i[0], i[1], i[2]])
-

@@ -5,12 +5,9 @@ import csv
 with open("můj_slovník.csv", encoding="UTF-8") as soubor:
     obsah_slovniku = csv.reader(soubor, delimiter=";")
 
-    polozky_ze_slovniku = []
+    slovnik = {}
     for polozka in obsah_slovniku:
-        dvojice = (polozka[0], polozka[1])
-        polozky_ze_slovniku.append(dvojice)
-
-slovnik = dict(polozky_ze_slovniku)
+        slovnik[polozka[0]] = polozka[1]
 
 # načtení textu/slov k segmentaci (a odstranění případné mezery na konci)
 with open("foneticky_přepsaný_stud.txt", encoding="UTF-8") as soubor:
