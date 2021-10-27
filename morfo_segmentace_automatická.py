@@ -14,7 +14,7 @@ with open(DICTIONARY_FILE, encoding="UTF-8") as soubor:
 
 # načtení textu/slov k segmentaci (a odstranění případné mezery na konci)
 with open(INPUT_FILE, encoding="UTF-8") as soubor:
-    slova_k_segmentaci = soubor.read().strip().split(sep=" ")
+    slova_k_segmentaci = soubor.read().rstrip().split(sep=" ")
 
 # autosegmentace
 segmented_words = []
