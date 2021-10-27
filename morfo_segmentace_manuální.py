@@ -1,6 +1,10 @@
 import csv
 import re
 
+DICTIONARY_FILE = "můj_slovník.csv"
+INPUT_FILE = "něco.txt"
+OUTPUT_FILE = "foneticky_přepsané_něco.txt"
+
 
 def uprava_textu(text):
     # odstranění interpunkce a znaků - a co mazání řádků ???
@@ -97,7 +101,7 @@ def segmentace_manualni(slova):
     print(len(slova))  # vypíše počet slov, které je třeba nasegmentovat (obvykle neradostné číslo)
 
     # segmentace slova + vytváření slovníku
-    with open("můj_slovník.csv", "a", encoding="UTF-8") as csvfile:
+    with open(DICTIONARY_FILE, "a", encoding="UTF-8") as csvfile:
         vysledek_segmentace = csv.writer(csvfile, delimiter=';', lineterminator='\n')
         for polozka in slova:
             zpracovane = input(f"{polozka}: ")
@@ -109,11 +113,11 @@ def segmentace_manualni(slova):
 
 
 # načtení textu určeného k segmentaci
-with open("něco.txt", encoding="UTF-8") as soubor:
+with open(INPUT_FILE, encoding="UTF-8") as soubor:
     text_k_segmentaci = soubor.read().lower().replace("\n", " ").strip()
 
 # načtení morfologického slovníku
-with open("můj_slovník.csv", encoding="UTF-8") as soubor:
+with open(DICTIONARY_FILE, encoding="UTF-8") as soubor:
     obsah_slovniku = csv.reader(soubor, delimiter=";")
     slova_ze_slovniku = set()
     for polozka in obsah_slovniku:
