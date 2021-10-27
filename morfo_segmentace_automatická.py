@@ -17,16 +17,19 @@ with open(INPUT_FILE, encoding="UTF-8") as soubor:
     slova_k_segmentaci = soubor.read().strip().split(sep=" ")
 
 # autosegmentace
-for i in range(len(slova_k_segmentaci)):
+segmented_words = []
+for original_word in slova_k_segmentaci:
     try:
-        slova_k_segmentaci[i] = slovnik[slova_k_segmentaci[i]]
+        segmented_word = slovnik[original_word]
     except KeyError:
-        print(
-            f"POZOR! SLOVO {slova_k_segmentaci[i]} CHYBÍ VE SLOVNÍKU A TUDÍŽ"
+      print(
+            f"POZOR! SLOVO {original_word} CHYBÍ VE SLOVNÍKU A TUDÍŽ"
             "NEBUDE SEGMENTOVÁNO!"
         )
-
-text_segmentovany_slouceny = " ".join(slova_k_segmentaci)
+        segmented_word = original_word
+    segmented_words.append(segmented_word)
+ 
+text_segmentovany_slouceny = " ".join(segmented_words)
 
 # uložení výsledku segmentace do souboru
 with open(OUTPUT_FILE, mode="x", encoding="UTF-8") as soubor:
