@@ -18,7 +18,10 @@ for i in range(len(slova_k_segmentaci)):
     try:
         slova_k_segmentaci[i] = slovnik[slova_k_segmentaci[i]]
     except KeyError:
-        print(f"POZOR! SLOVO {slova_k_segmentaci[i]} CHYBÍ VE SLOVNÍKU A TUDÍŽ NEBUDE SEGMENTOVÁNO!")
+        print(
+            f"POZOR! SLOVO {slova_k_segmentaci[i]} CHYBÍ VE SLOVNÍKU A TUDÍŽ"
+            "NEBUDE SEGMENTOVÁNO!"
+        )
 
 text_segmentovany_slouceny = " ".join(slova_k_segmentaci)
 
