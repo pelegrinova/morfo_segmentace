@@ -77,4 +77,3 @@ with open("data_S_M_F_tokens_stud.csv", "x", encoding="UTF-8") as csvfile:
     vysledek_data.writerow(["construct", "frq", "mean of constituent"])
     for i in vysledek_mal:
         vysledek_data.writerow([i[0], i[1], i[2]])
-
