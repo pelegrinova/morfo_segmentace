@@ -16,11 +16,8 @@ def uprava_textu(text):
     # odstranění číslic
     text = re.sub(r"[0-9]+", "", text)
 
-    # odstranění mezer
-    text = re.sub(r"\s{2,}", " ", text)
-
     # rozdělení textu na slova
-    text_na_slova = text.split(sep=" ")
+    text_na_slova = text.split()
 
     # substituce grafiky tak, aby odpovídala realizaci hlásek
     text_na_slova_foneticky = []
@@ -114,7 +111,7 @@ def segmentace_manualni(slova):
 
 # načtení textu určeného k segmentaci
 with open(INPUT_FILE, encoding="UTF-8") as soubor:
-    text_k_segmentaci = soubor.read().lower().replace("\n", " ").strip()
+    text_k_segmentaci = soubor.read().lower()
 
 # načtení morfologického slovníku
 with open(DICTIONARY_FILE, encoding="UTF-8") as soubor:
