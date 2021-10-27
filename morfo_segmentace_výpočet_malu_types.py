@@ -86,7 +86,7 @@ print(vysledek_data)
 print(segmentovany_text_types)
 
 # uložení výsledků do tabulky
-with open("data_S_M_F_types_stud_.csv", "x", encoding="UTF-8") as csvfile:
+with open("data_S_M_F_types_stud.csv", "x", encoding="UTF-8") as csvfile:
     vysledek_mal = csv.writer(csvfile, delimiter=';', lineterminator='\n')
     vysledek_mal.writerow(["construct", "frq", "mean of constituent"])
     for i in vysledek_data:
