@@ -5,12 +5,9 @@ import csv
 with open("můj_slovník.csv", encoding="UTF-8") as soubor:
     obsah_slovniku = csv.reader(soubor, delimiter=";")
 
-    polozky_ze_slovniku = []
+    slovnik = {}
     for polozka in obsah_slovniku:
-        dvojice = (polozka[0], polozka[1])
-        polozky_ze_slovniku.append(dvojice)
-
-slovnik = dict(polozky_ze_slovniku)
+        slovnik[polozka[0]] = polozka[1]
 
 # načtení textu/slov k segmentaci (a odstranění případné mezery na konci)
 with open("foneticky_přepsaný_stud.txt", encoding="UTF-8") as soubor:
@@ -22,7 +19,7 @@ for i in range(len(slova_k_segmentaci)):
         slova_k_segmentaci[i] = slovnik[slova_k_segmentaci[i]]
     except KeyError:
         print(f"POZOR! SLOVO {slova_k_segmentaci[i]} CHYBÍ VE SLOVNÍKU A TUDÍŽ NEBUDE SEGMENTOVÁNO!")
-        pass   #
+        pass
 
 text_segmentovany_slouceny = " ".join(slova_k_segmentaci)
 
