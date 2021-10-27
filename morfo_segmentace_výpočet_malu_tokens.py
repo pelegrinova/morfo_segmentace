@@ -4,6 +4,9 @@ from collections import Counter
 from locale import LC_NUMERIC
 from locale import setlocale
 
+INPUT_FILE = "vysledek_segmentace_stud.txt"
+OUTPUT_FILE = "data_S_M_F_tokens_stud.csv"
+
 
 # počítadlo frekvencí
 def pocitadlo(soubor):
@@ -28,7 +31,7 @@ def vypocet_mal(data):
 setlocale(LC_NUMERIC, "cs_CZ.UTF-8")
 
 # načtení segmentovaného textu
-with open("vysledek_segmentace_stud.txt", encoding="UTF-8") as soubor:
+with open(INPUT_FILE, encoding="UTF-8") as soubor:
     segmentovany_text_tokens = soubor.read().strip().split(sep=" ")
 
 # přípravné výpočty
@@ -72,7 +75,7 @@ vysledek_mal = vypocet_mal(slovnik_data_pro_mal)
 print(vysledek_mal)
 
 # uložení výsledků do tabulky
-with open("data_S_M_F_tokens_stud.csv", "x", encoding="UTF-8") as csvfile:
+with open(OUTPUT_FILE, "x", encoding="UTF-8") as csvfile:
     vysledek_data = csv.writer(csvfile, delimiter=';', lineterminator='\n')
     vysledek_data.writerow(["construct", "frq", "mean of constituent"])
     for i in vysledek_mal:

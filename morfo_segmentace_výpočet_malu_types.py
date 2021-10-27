@@ -4,6 +4,9 @@ from collections import Counter
 from locale import LC_NUMERIC
 from locale import setlocale
 
+INPUT_FILE = "vysledek_segmentace_stud.txt"
+OUTPUT_FILE = "data_S_M_F_types_stud.csv"
+
 
 # převod textu v tokens na text v types
 def token_to_types(text):
@@ -39,7 +42,7 @@ def vypocet_mal(data):
 setlocale(LC_NUMERIC, "cs_CZ.UTF-8")
 
 # načtení segmentovaného textu
-with open("vysledek_segmentace_stud.txt", encoding="UTF-8") as soubor:
+with open(INPUT_FILE, encoding="UTF-8") as soubor:
     segmentovany_text = soubor.read().strip().split(sep=" ")
 
 segmentovany_text_types = token_to_types(segmentovany_text)
@@ -86,7 +89,7 @@ print(vysledek_data)
 print(segmentovany_text_types)
 
 # uložení výsledků do tabulky
-with open("data_S_M_F_types_stud.csv", "x", encoding="UTF-8") as csvfile:
+with open(OUTPUT_FILE, "x", encoding="UTF-8") as csvfile:
     vysledek_mal = csv.writer(csvfile, delimiter=';', lineterminator='\n')
     vysledek_mal.writerow(["construct", "frq", "mean of constituent"])
     for i in vysledek_data:
