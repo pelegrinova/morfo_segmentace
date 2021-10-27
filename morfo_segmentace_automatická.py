@@ -22,13 +22,13 @@ for original_word in slova_k_segmentaci:
     try:
         segmented_word = slovnik[original_word]
     except KeyError:
-      print(
+        print(
             f"POZOR! SLOVO {original_word} CHYBÍ VE SLOVNÍKU A TUDÍŽ"
             "NEBUDE SEGMENTOVÁNO!"
         )
         segmented_word = original_word
     segmented_words.append(segmented_word)
- 
+
 text_segmentovany_slouceny = " ".join(segmented_words)
 
 # uložení výsledku segmentace do souboru
