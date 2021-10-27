@@ -99,7 +99,7 @@ def uprava_textu(text):
 
 def ulozeni_substituovaneho_textu(text):
     # uložení "foneticky" upraveného textu
-    with open(OUTPUT_FILE, mode="w", encoding="UTF-8") as soubor:
+    with open(OUTPUT_FILE, mode="x", encoding="UTF-8") as soubor:
         print(text, file=soubor)
 
 
