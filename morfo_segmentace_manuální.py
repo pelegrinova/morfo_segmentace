@@ -128,7 +128,7 @@ with open(DICTIONARY_FILE, encoding="UTF-8") as soubor:
 text_k_segmentaci_substituovany, text_na_slova_uniq_foneticky = uprava_textu(text_k_segmentaci)
 
 # "foneticky" upravený text uložím do souboru zvlášť
-with open("foneticky_přepsané_něco.txt", mode="x", encoding="UTF-8") as soubor:
+with open(OUTPUT_FILE, mode="x", encoding="UTF-8") as soubor:
     print(text_k_segmentaci_substituovany, file=soubor)
 
 # porovnání slov k segmentaci se slovy ve slovníku (zda už některé z nich ve slovníku nejsou segmentované)
