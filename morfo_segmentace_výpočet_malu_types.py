@@ -5,7 +5,7 @@ from locale import LC_NUMERIC
 from locale import setlocale
 
 INPUT_FILE = "vysledek_segmentace_stud.txt"
-OUTPUT_FILE = "data_S_M_F_types_stud_.csv"
+OUTPUT_FILE = "data_S_M_F_types_stud.csv"
 
 
 # převod textu v tokens na text v types

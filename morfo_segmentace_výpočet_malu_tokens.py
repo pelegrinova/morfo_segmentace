@@ -4,8 +4,8 @@ from collections import Counter
 from locale import LC_NUMERIC
 from locale import setlocale
 
-INPUT_FILE = "vysledek_segmentace_stud_.txt"
-OUTPUT_FILE = "data_S_M_F_tokens_stud_.csv"
+INPUT_FILE = "vysledek_segmentace_stud.txt"
+OUTPUT_FILE = "data_S_M_F_tokens_stud.csv"
 
 
 # počítadlo frekvencí
@@ -80,4 +80,3 @@ with open(OUTPUT_FILE, "x", encoding="UTF-8") as csvfile:
     vysledek_data.writerow(["construct", "frq", "mean of constituent"])
     for i in vysledek_mal:
         vysledek_data.writerow([i[0], i[1], i[2]])
-
