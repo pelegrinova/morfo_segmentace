@@ -7,6 +7,9 @@ OUTPUT_FILE = "foneticky_přepsané_něco.txt"
 
 
 def uprava_textu(text):
+    # Normalize to lower case.
+    text = text.lower()
+
     # odstranění interpunkce a znaků - a co mazání řádků ???
     znaky = [",", ".", "!", "?", "'", "\"", "<", ">", "-", "–", ":", ";", "„", "“", "=", "%", "&", "#", "@", "/", "\\", "+", "(", ")", "[", "]", "§"]
 
@@ -111,7 +114,7 @@ def segmentace_manualni(slova):
 
 # načtení textu určeného k segmentaci
 with open(INPUT_FILE, encoding="UTF-8") as soubor:
-    text_k_segmentaci = soubor.read().lower()
+    text_k_segmentaci = soubor.read()
 
 # načtení morfologického slovníku
 with open(DICTIONARY_FILE, encoding="UTF-8") as soubor:
